@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class Main{
     public static void main(String[] args){
@@ -8,6 +10,30 @@ public class Main{
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);//レイアウト無効化
         
+        //CardLayoutを使うパネル
+        JPanel cards = new JPanel(new CardLayout());
+
+        //----メモ----
+        JPanel memoPage = new JPanel();
+        JButton toBookMarkPage = new JButton("ブックマーク");
+        memoPage.add(new JLabel("メモ"));
+        memoPage.add(toBookMarkPage);
+
+        //----ブックマーク----
+        JPanel bookMarkPage = new JPanel();
+        JButton toMemoPage = new JButton("メモ");
+        bookMarkPage.add(new JLabel("ブックマーク"));
+        bookMarkPage.add(memoPage);
+
+        //カードに追加
+        cards.add(memoPage, "メモ");
+        cards.add(bookMarkPage, "ブックマーク");
+
+        //ボタンを押したら画面を切り替える
+        CardLayout cl = (CardLayout)(cards.getLayout());
+        toBookMarkPage.addActionListener(e -> cl.show(cards, "bookMarkPage"));
+        toMemoPage.addActionListener(e -> cl.show(cards, "memoPage"));
+
 
         JButton configButton = new JButton("設定");
         JButton editButton = new JButton("編集");
